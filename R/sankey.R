@@ -30,7 +30,7 @@ prepare_params <- function(...) {
 find_default_space <- function(.df) {
   .df %>%
     dplyr::group_by(.data$n_x) %>%
-    dplyr::summarise(n_groups = dplyr::n_distinct(.data$node),
+    dplyr::summarize(n_groups = dplyr::n_distinct(.data$node),
               freq = sum(.data$freq, na.rm = TRUE)) %>%
     dplyr::mutate(v = .data$freq / .data$n_groups / 4) %>%
     dplyr::pull(.data$v) %>%
@@ -225,27 +225,27 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
                                                  flow_data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::group_by(n_x, node, n_next_x, next_node) %>%
-                                                   dplyr::summarise(flow_freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(flow_freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
 
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node, -next_x) %>%
                                                    dplyr::group_by_all() %>%
-                                                   dplyr::summarise(freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                } else {
                                                  flow_data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::group_by(n_x, node, n_next_x, next_node) %>%
-                                                   dplyr::summarise(flow_freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
+                                                   dplyr::summarize(flow_freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
                                                    dplyr::ungroup()
 
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node, -next_x) %>%
                                                    dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) %>%
-                                                   dplyr::summarise(freq = sum(value, na.rm = TRUE),, .groups = "keep") %>%
+                                                   dplyr::summarize(freq = sum(value, na.rm = TRUE),, .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                }
 
@@ -362,27 +362,27 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
                                                  flow_data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::group_by(n_x, node, n_next_x, next_node) %>%
-                                                   dplyr::summarise(flow_freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(flow_freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
 
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node) %>%
                                                    dplyr::group_by_all() %>%
-                                                   dplyr::summarise(freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                } else {
                                                  flow_data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::group_by(n_x, node, n_next_x, next_node) %>%
-                                                   dplyr::summarise(flow_freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
+                                                   dplyr::summarize(flow_freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
                                                    dplyr::ungroup()
 
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node) %>%
                                                    dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) %>%
-                                                   dplyr::summarise(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                }
 
@@ -492,14 +492,14 @@ StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node) %>%
                                                    dplyr::group_by_all() %>%
-                                                   dplyr::summarise(freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                } else {
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node) %>%
                                                    dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) %>%
-                                                   dplyr::summarise(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                }
 
@@ -565,14 +565,14 @@ StatSankeyNode <- ggplot2::ggproto("StatSankeyNode", ggplot2::Stat,
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node, -next_x) %>%
                                                    dplyr::group_by_all() %>%
-                                                   dplyr::summarise(freq = dplyr::n(), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = n(), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                } else {
                                                  data <- data %>%
                                                    dplyr::mutate(group = 1) %>%
                                                    dplyr::select(-n_next_x, -next_node, -next_x) %>%
                                                    dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) %>%
-                                                   dplyr::summarise(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
+                                                   dplyr::summarize(freq = sum(value, na.rm = TRUE), .groups = "keep") %>%
                                                    dplyr::ungroup()
                                                }
 
